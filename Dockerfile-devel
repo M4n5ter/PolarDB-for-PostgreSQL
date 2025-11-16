@@ -13,17 +13,33 @@ ENV PATH="/home/postgres/tmp_polardb_pg_17_base/bin:/home/postgres/tmp_polardb_p
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Upgrade softwares
+# apt install -y ca-certificates
+# /etc/apt/sources.list（统一使用 http，避免证书依赖）
+RUN sed -i 's|http://archive.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list && \
+    sed -i 's|https://archive.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list && \
+    sed -i 's|https://security.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list && \
+    sed -i 's|http://ports.ubuntu.com/ubuntu-ports|http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports|g' /etc/apt/sources.list && \
+    sed -i 's|https://ports.ubuntu.com/ubuntu-ports|http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports|g' /etc/apt/sources.list
+
+# /etc/apt/sources.list.d/ubuntu.sources
+RUN sed -i 's|http://archive.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i 's|https://archive.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i 's|http://security.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i 's|https://security.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i 's|http://ports.ubuntu.com/ubuntu-ports|http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports|g' /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i 's|https://ports.ubuntu.com/ubuntu-ports|http://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports|g' /etc/apt/sources.list.d/ubuntu.sources
+
+# Upgrade softwares and install base toolchain
 RUN apt update -y && \
     apt upgrade -y && \
-
-RUN apt install -y \
+    apt install -y \
         clang \
         llvm-dev \
         make \
         gdb \
         pkg-config \
-        locales && \
+        locales
 # Generate locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     sed -i '/zh_CN/s/^# //g' /etc/locale.gen && \
@@ -65,8 +81,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
         uuid-dev \
         && \
     apt remove -y libunwind-18-dev && \
-    apt install -y libunwind-dev && \
-    apt clean -y
+    apt install -y libunwind-dev
 
 # Tools
 RUN apt install -y \
@@ -77,7 +92,7 @@ RUN apt install -y \
         sudo \
         vim \
         git \
-        cmake && \
+        cmake
 
 # PostGIS
 RUN apt install -y \
