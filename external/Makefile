@@ -36,6 +36,8 @@ SUBDIRS += pg_repack
 SUBDIRS += pgvector
 SUBDIRS += polar_sql_mapping
 SUBDIRS += roaringbitmap
+SUBDIRS += age
+SUBDIRS += pg_duckdb
 endif # enable_minimal
 
 ifeq ($(enable_fault_injector),yes)

@@ -1,0 +1,11 @@
+[submodule "external/age"]
+	path = external/age
+	url = https://github.com/apache/age
+	branch = release/PG15/1.5.0
+[submodule "external/pgvector"]
+	path = external/pgvector
+	url = https://github.com/pgvector/pgvector
+	branch = v0.8.1
+[submodule "external/pg_duckdb"]
+	path = external/pg_duckdb
+	url = https://github.com/duckdb/pg_duckdb
