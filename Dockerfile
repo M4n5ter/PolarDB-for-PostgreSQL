@@ -22,6 +22,11 @@ ENV ERROR_ON_WARNING=0
 # Release/ReleaseStatic
 ENV DUCKDB_BUILD=Release
 
+# Patch pg_net(v0.8.0) worker to avoid deprecated CURLOPT usage on newer libcurl
+RUN sed -i 's/CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS/CURLOPT_PROTOCOLS_STR, "http,https"/' external/pg_net/src/worker.c
+# Remove duplicate BackgroundWorkerHandle definition in pg_cron (PG15 already provides it)
+RUN sed -i '/struct BackgroundWorkerHandle/,/};/d' external/pg_cron/include/task_states.h
+
 RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --port=5432
 
 # Build cargo-based extensions that require cargo/pgrx manually
