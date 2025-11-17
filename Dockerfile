@@ -22,6 +22,8 @@ ENV DUCKDB_BUILD=Release
 
 # Ensure VectorChord install target triggers its cargo build automatically
 RUN sed -ri 's/^(install:).*$/install: build/' /home/postgres/polardb_pg/external/VectorChord/Makefile
+# Also drop inherited compiler flags (which add -Werror) when cargo builds VectorChord
+RUN sed -ri $'s|^\tcargo run -p xtask -- build$|\tenv -u CFLAGS -u CXXFLAGS -u CFLAGS_x86_64-unknown-linux-gnu -u CXXFLAGS_x86_64-unknown-linux-gnu -u CFLAGS_aarch64-unknown-linux-gnu -u CXXFLAGS_aarch64-unknown-linux-gnu cargo run -p xtask -- build|' /home/postgres/polardb_pg/external/VectorChord/Makefile
 
 RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --port=5432
 
