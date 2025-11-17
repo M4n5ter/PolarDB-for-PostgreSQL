@@ -12,7 +12,8 @@ RUN bash -lc "rustup self update && rustup update"
 
 # Compile and install PolarDB-PG
 WORKDIR /home/postgres/polardb_pg
-ENV PATH=/u01/polardb_pg/bin:$PATH
+# include cargo binaries for extensions that run cargo during make
+ENV PATH=/root/.cargo/bin:/u01/polardb_pg/bin:$PATH
 ENV PG_CONFIG=/u01/polardb_pg/bin/pg_config
 # pg_duckdb Makefile
 ENV ERROR_ON_WARNING=0
