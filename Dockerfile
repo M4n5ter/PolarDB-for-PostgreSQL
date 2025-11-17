@@ -18,6 +18,10 @@ ENV PG_CONFIG=/u01/polardb_pg/bin/pg_config
 ENV ERROR_ON_WARNING=0
 # Release/ReleaseStatic
 ENV DUCKDB_BUILD=Release
+
+# Ensure VectorChord install target triggers its cargo build automatically
+RUN sed -ri 's/^(install:).*$/install: build/' /home/postgres/polardb_pg/external/VectorChord/Makefile
+
 RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --port=5432
 
 # Build cargo-based extensions that require cargo pgrx manually
