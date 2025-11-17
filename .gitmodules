@@ -28,3 +28,12 @@
 	path = external/pgaudit
 	url = https://github.com/pgaudit/pgaudit
 	branch = REL_15_STABLE
+[submodule "external/wal2json"]
+	path = external/wal2json
+	url = https://github.com/eulerto/wal2json/
+[submodule "external/pg-safeupdate"]
+	path = external/pg-safeupdate
+	url = https://github.com/eradman/pg-safeupdate
+[submodule "external/index_advisor"]
+	path = external/index_advisor
+	url = https://github.com/supabase/index_advisor
