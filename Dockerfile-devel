@@ -36,6 +36,7 @@ RUN apt update -y && \
     apt upgrade -y && \
     apt install -y \
         clang \
+        libclang \
         llvm-dev \
         make \
         gdb \
