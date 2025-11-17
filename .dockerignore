@@ -1,0 +1,42 @@
+# Keep the Docker build context lean so COPY layers stay cached.
+.git
+.gitmodules
+.gitignore
+.gitattributes
+.github/
+.cirrus*
+
+# Editor/IDE settings
+.idea/
+.vscode/
+
+# Autotools/cmake caches
+autom4te.cache/
+config.cache
+config.log
+config.status
+
+# Build outputs and temporary installs
+build/
+tmp/
+tmp_install/
+Debug/
+Release/
+GNUmakefile
+
+# Compiled objects and archives
+*.o
+*.obj
+*.so*
+*.a
+*.bc
+*.dll
+*.exe
+
+# Logs and misc noise
+*.log
+*.tmp
+build.log
+
+# macOS metadata
+.DS_Store
