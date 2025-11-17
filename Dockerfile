@@ -20,6 +20,15 @@ ENV ERROR_ON_WARNING=0
 ENV DUCKDB_BUILD=Release
 RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --port=5432
 
+# Build cargo-based extensions that require cargo pgrx manually
+WORKDIR /home/postgres/polardb_pg/external/pg_tokenizer.rs
+RUN cargo pgrx install --sudo --release --pg-config /u01/polardb_pg/bin/pg_config
+
+WORKDIR /home/postgres/polardb_pg/external/VectorChord-bm25
+RUN cargo pgrx install --sudo --release --pg-config /u01/polardb_pg/bin/pg_config
+
+WORKDIR /home/postgres/polardb_pg
+
 # Install PostGIS
 # WORKDIR /home/postgres
 RUN wget --no-verbose https://download.osgeo.org/postgis/source/postgis-3.5.2.tar.gz && \
