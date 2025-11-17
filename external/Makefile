@@ -37,6 +37,9 @@ SUBDIRS += pgvector
 SUBDIRS += polar_sql_mapping
 SUBDIRS += roaringbitmap
 SUBDIRS += age
+SUBDIRS += pgaudit
+SUBDIRS += pg_cron
+SUBDIRS += pg_net
 SUBDIRS += pg_duckdb
 endif # enable_minimal
 

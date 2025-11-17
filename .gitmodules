@@ -18,3 +18,13 @@
 [submodule "external/VectorChord-bm25"]
 	path = external/VectorChord-bm25
 	url = https://github.com/tensorchord/VectorChord-bm25
+[submodule "external/pg_net"]
+	path = external/pg_net
+	url = https://github.com/supabase/pg_net
+[submodule "external/pg_cron"]
+	path = external/pg_cron
+	url = https://github.com/citusdata/pg_cron
+[submodule "external/pgaudit"]
+	path = external/pgaudit
+	url = https://github.com/pgaudit/pgaudit
+	branch = REL_15_STABLE
