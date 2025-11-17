@@ -16,20 +16,20 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV UBUNTU_MIRROR_DOMAIN=mirrors.aliyun.com
 # RUN apt install ca-certificates
 # /etc/apt/sources.list
-RUN sed -i 's|http://archive.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list && \
-    sed -i 's|https://archive.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list && \
-    sed -i 's|http://security.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list && \
-    sed -i 's|https://security.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list && \
-    sed -i 's|http://ports.ubuntu.com/ubuntu-ports|http://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g' /etc/apt/sources.list && \
-    sed -i 's|https://ports.ubuntu.com/ubuntu-ports|https://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g' /etc/apt/sources.list
+RUN sed -i "s|http://archive.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list && \
+    sed -i "s|https://archive.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list && \
+    sed -i "s|http://security.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list && \
+    sed -i "s|https://security.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list && \
+    sed -i "s|http://ports.ubuntu.com/ubuntu-ports|http://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g" /etc/apt/sources.list && \
+    sed -i "s|https://ports.ubuntu.com/ubuntu-ports|https://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g" /etc/apt/sources.list
 
 # /etc/apt/sources.list.d/ubuntu.sources
-RUN sed -i 's|http://archive.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list.d/ubuntu.sources && \
-    sed -i 's|https://archive.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list.d/ubuntu.sources && \
-    sed -i 's|http://security.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list.d/ubuntu.sources && \
-    sed -i 's|https://security.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g' /etc/apt/sources.list.d/ubuntu.sources && \
-    sed -i 's|http://ports.ubuntu.com/ubuntu-ports|http://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g' /etc/apt/sources.list.d/ubuntu.sources && \
-    sed -i 's|https://ports.ubuntu.com/ubuntu-ports|https://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g' /etc/apt/sources.list.d/ubuntu.sources
+RUN sed -i "s|http://archive.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i "s|https://archive.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i "s|http://security.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i "s|https://security.ubuntu.com|https://${UBUNTU_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i "s|http://ports.ubuntu.com/ubuntu-ports|http://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g" /etc/apt/sources.list.d/ubuntu.sources && \
+    sed -i "s|https://ports.ubuntu.com/ubuntu-ports|https://${UBUNTU_MIRROR_DOMAIN}/ubuntu-ports|g" /etc/apt/sources.list.d/ubuntu.sources
 
 # Upgrade softwares and install base toolchain
 RUN apt update -y && \
