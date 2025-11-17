@@ -30,7 +30,7 @@ RUN sed -i '/struct BackgroundWorkerHandle/,/};/d' external/pg_cron/include/task
 RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --port=5432
 
 # Initialize cargo-pgrx config so later installs can find pg_config
-RUN cargo pgrx init --pg15=/u01/polardb_pg/bin/pg_config --skip-install
+RUN cargo pgrx init --pg15=/u01/polardb_pg/bin/pg_config
 
 # Build cargo-based extensions that require cargo/pgrx manually
 WORKDIR /home/postgres/polardb_pg
