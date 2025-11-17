@@ -24,14 +24,14 @@ RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --p
 
 # Build cargo-based extensions that require cargo/pgrx manually
 WORKDIR /home/postgres/polardb_pg
-RUN make -C external/VectorChord build
-RUN make -C external/VectorChord install
+RUN make -C external/VectorChord build && \
+    make -C external/VectorChord install
 
 WORKDIR /home/postgres/polardb_pg/external/VectorChord-bm25
-RUN cargo pgrx install --sudo --release --pg-config /u01/polardb_pg/bin/pg_config
+RUN cargo pgrx install --sudo --release --features "pg15" --pg-config /u01/polardb_pg/bin/pg_config
 
 WORKDIR /home/postgres/polardb_pg/external/pg_tokenizer.rs
-RUN cargo pgrx install --sudo --release --pg-config /u01/polardb_pg/bin/pg_config
+RUN cargo pgrx install --sudo --release --features "pg15 lindera-ipadic" --pg-config /u01/polardb_pg/bin/pg_config
 
 WORKDIR /home/postgres/polardb_pg
 
