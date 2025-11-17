@@ -37,8 +37,6 @@ RUN apt update -y && \
     curl --proto '=https' --tlsv1.2 -sSf https://apt.llvm.org/llvm.sh | bash -s -- 18 && \
     update-alternatives --install /usr/bin/clang clang $(which clang-18) 255
     apt install -y \
-        clang \
-        llvm-dev \
         make \
         gdb \
         pkg-config \
