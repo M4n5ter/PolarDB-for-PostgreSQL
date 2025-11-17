@@ -34,7 +34,7 @@ RUN sed -i "s|http://archive.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g" /etc/a
 # Upgrade softwares and install base toolchain
 RUN apt update -y && \
     apt upgrade -y && \
-    apt install -y curl lsb-release && \
+    apt install -y curl lsb-release wget software-properties-common gnupg && \
     curl --proto '=https' --tlsv1.2 -sSf https://apt.llvm.org/llvm.sh | bash -s -- 18 && \
     update-alternatives --install /usr/bin/clang clang $(which clang-18) 255 && \
     apt install -y \
