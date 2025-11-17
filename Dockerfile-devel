@@ -35,7 +35,7 @@ RUN sed -i "s|http://archive.ubuntu.com|http://${UBUNTU_MIRROR_DOMAIN}|g" /etc/a
 RUN apt update -y && \
     apt upgrade -y && \
     curl --proto '=https' --tlsv1.2 -sSf https://apt.llvm.org/llvm.sh | bash -s -- 18 && \
-    update-alternatives --install /usr/bin/clang clang $(which clang-18) 255
+    update-alternatives --install /usr/bin/clang clang $(which clang-18) 255 && \
     apt install -y \
         make \
         gdb \
