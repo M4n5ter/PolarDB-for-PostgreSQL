@@ -37,6 +37,9 @@ SUBDIRS += pgvector
 SUBDIRS += polar_sql_mapping
 SUBDIRS += roaringbitmap
 SUBDIRS += age
+SUBDIRS += VectorChord
+SUBDIRS += VectorChord-bm25
+SUBDIRS += pg_tokenizer.rs
 SUBDIRS += pg_duckdb
 endif # enable_minimal
 
