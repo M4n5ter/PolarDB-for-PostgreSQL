@@ -20,18 +20,17 @@ ENV ERROR_ON_WARNING=0
 # Release/ReleaseStatic
 ENV DUCKDB_BUILD=Release
 
-# Ensure VectorChord install target triggers its cargo build automatically
-RUN sed -ri 's/^(install:).*$/install: build/' /home/postgres/polardb_pg/external/VectorChord/Makefile
-# Also drop inherited compiler flags (which add -Werror) when cargo builds VectorChord
-RUN sed -ri $'s|^\tcargo run -p xtask -- build$|\tenv -u CFLAGS -u CXXFLAGS -u CFLAGS_x86_64-unknown-linux-gnu -u CXXFLAGS_x86_64-unknown-linux-gnu -u CFLAGS_aarch64-unknown-linux-gnu -u CXXFLAGS_aarch64-unknown-linux-gnu cargo run -p xtask -- build|' /home/postgres/polardb_pg/external/VectorChord/Makefile
-
 RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --port=5432
 
-# Build cargo-based extensions that require cargo pgrx manually
-WORKDIR /home/postgres/polardb_pg/external/pg_tokenizer.rs
-RUN cargo pgrx install --sudo --release --pg-config /u01/polardb_pg/bin/pg_config
+# Build cargo-based extensions that require cargo/pgrx manually
+WORKDIR /home/postgres/polardb_pg
+RUN make -C external/VectorChord build
+RUN make -C external/VectorChord install
 
 WORKDIR /home/postgres/polardb_pg/external/VectorChord-bm25
+RUN cargo pgrx install --sudo --release --pg-config /u01/polardb_pg/bin/pg_config
+
+WORKDIR /home/postgres/polardb_pg/external/pg_tokenizer.rs
 RUN cargo pgrx install --sudo --release --pg-config /u01/polardb_pg/bin/pg_config
 
 WORKDIR /home/postgres/polardb_pg
