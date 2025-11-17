@@ -37,7 +37,9 @@ RUN apt update -y && \
     apt install -y curl lsb-release wget software-properties-common gnupg && \
     curl --proto '=https' --tlsv1.2 -sSf https://apt.llvm.org/llvm.sh | bash -s -- 18 && \
     update-alternatives --install /usr/bin/clang clang $(which clang-18) 255 && \
+    update-alternatives --install /usr/bin/llvm-config llvm-config $(which llvm-config-18) 255 && \
     apt install -y \
+        llvm-config \
         make \
         gdb \
         pkg-config \
