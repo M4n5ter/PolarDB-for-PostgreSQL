@@ -55,12 +55,3 @@ RUN wget --no-verbose https://download.osgeo.org/postgis/source/postgis-3.5.2.ta
     ./configure -q && \
     make -s -j$(nproc) && \
     make -s install
-
-FROM mst1208/polardb-pg-devel:ubuntu-24.04
-LABEL maintainer="m4n5terrr@gmail.com"
-
-# Copy binary
-COPY --from=building /u01/polardb_pg/ /u01/polardb_pg/
-
-RUN sudo chown -R postgres:postgres /u01/polardb_pg/
-RUN sudo chmod -R 700 /u01/polardb_pg/
