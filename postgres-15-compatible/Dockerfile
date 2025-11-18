@@ -45,10 +45,10 @@ RUN set -eux; \
 	POLARDB_SHARE=/u01/polardb_pg/share/postgresql; \
 	POSTGRES_SHARE=/usr/share/postgresql; \
 	PG_SHARE=/usr/lib/postgresql/$PG_MAJOR/share/postgresql; \
+	cat "$POLARDB_SHARE/polardb.conf.sample" >> "$POLARDB_SHARE/postgresql.conf.sample"; \
 	sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" "$POLARDB_SHARE/postgresql.conf.sample"; \
 	sed -ri "s!^shared_preload_libraries\s*=.*!shared_preload_libraries = 'age,pg_duckdb,vchord,pg_tokenizer,vchord_bm25,pg_net,pg_cron,pgaudit,safeupdate,\$libdir/polar_vfs,\$libdir/polar_io_stat,\$libdir/polar_monitor_preload,\$libdir/polar_worker'!" "$POLARDB_SHARE/postgresql.conf.sample"; \
-	echo "search_path = '\"\$user\", public, ag_catalog, tokenizer_catalog, bm25_catalog'" >> "$POLARDB_SHARE/postgresql.conf.sample"; \
-	cat "$POLARDB_SHARE/polardb.conf.sample" >> "$POLARDB_SHARE/postgresql.conf.sample"; \
+	sed -ri "s!^#?search_path\s*=.*!search_path = '\"\$user\", public, ag_catalog, tokenizer_catalog, bm25_catalog'!" "$POLARDB_SHARE/postgresql.conf.sample"; \
 	echo "polar_enable_shared_storage_mode = off" >> "$POLARDB_SHARE/postgresql.conf.sample"; \
 	install -d $POSTGRES_SHARE/$PG_MAJOR; \
 	cp -fv "$POLARDB_SHARE/postgresql.conf.sample" $POSTGRES_SHARE/postgresql.conf.sample; \
