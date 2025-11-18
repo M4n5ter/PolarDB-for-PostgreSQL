@@ -67,6 +67,7 @@ RUN set -eux; \
 		libnss-wrapper \
 		xz-utils \
 		zstd \
+		libunwind8 \
 	; \
 	rm -rf /var/lib/apt/lists/*
 
