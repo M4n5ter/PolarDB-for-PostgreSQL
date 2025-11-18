@@ -17,7 +17,7 @@ RUN rustup self update && rustup update
 # Compile and install PolarDB-PG
 WORKDIR /home/postgres/polardb_pg
 # include cargo binaries for extensions that run cargo during make
-ENV PATH=/u01/polardb_pg/bin:$PATH
+ENV PATH=/root/.cargo/bin:/u01/polardb_pg/bin:$PATH
 ENV PGRX_HOME=/root/.pgrx
 RUN mkdir -p $PGRX_HOME
 ENV PG_CONFIG=/u01/polardb_pg/bin/pg_config

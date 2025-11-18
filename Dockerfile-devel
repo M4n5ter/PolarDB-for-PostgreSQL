@@ -196,8 +196,7 @@ index = "https://rsproxy.cn/crates.io-index"
 git-fetch-with-cli = true
 EOF
 
-ENV PATH=/root/.cargo/bin:$PATH
 # pgrx
-RUN cargo install --locked cargo-pgrx
+RUN bash -lc "cargo install --locked cargo-pgrx"
 
 USER $USER_NAME
