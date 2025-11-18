@@ -9,8 +9,10 @@ COPY . ./polardb_pg
 
 USER root
 
+SHELL ["/bin/bash", "-lc"]
+
 # rustup
-RUN bash -lc "rustup self update && rustup update"
+RUN rustup self update && rustup update
 
 # Compile and install PolarDB-PG
 WORKDIR /home/postgres/polardb_pg

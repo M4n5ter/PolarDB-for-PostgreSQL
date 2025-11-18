@@ -2,10 +2,9 @@
 
 FROM mst1208/polardb-binary:ubuntu-24.04
 
-# Dockerfile-devel 已经创建 postgres 用户并配置好大部分工具链，这里只需要确保运行目录存在
-RUN install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql
+SHELL ["/bin/bash", "-lc"]
 
-# 基础镜像已经包含 gnupg/less/wget 等工具
+RUN install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql
 
 # grab gosu for easy step-down from root
 # https://github.com/tianon/gosu/releases
@@ -23,9 +22,7 @@ RUN set -eux; \
 	gosu --version; \
 	gosu nobody true
 
-# Dockerfile-devel 已配置了 en_US.UTF-8，这里保持同样的语言环境
 ENV LANG en_US.utf8
-
 
 RUN mkdir /docker-entrypoint-initdb.d
 
