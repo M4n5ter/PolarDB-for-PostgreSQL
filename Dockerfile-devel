@@ -180,10 +180,10 @@ ENV LC_ALL=en_US.UTF-8
 USER root
 ENV RUSTUP_DIST_SERVER="https://rsproxy.cn"
 ENV RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
-RUN curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh | sh -s -- -y --default-toolchain stable
-
-RUN mkdir -p ~/.cargo && \
-    cat <<'EOF' > ~/.cargo/config.toml
+RUN curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh \
+    | bash -s -- -y --default-toolchain stable \
+ && export PATH="$HOME/.cargo/bin:$PATH" \
+ && cat <<'EOF' > ~/.cargo/config.toml
 [source.crates-io]
 replace-with = 'rsproxy-sparse'
 [source.rsproxy]
@@ -195,8 +195,6 @@ index = "https://rsproxy.cn/crates.io-index"
 [net]
 git-fetch-with-cli = true
 EOF
-
-# pgrx
-RUN bash -lc "cargo install --locked cargo-pgrx"
+ && cargo install --locked cargo-pgrx
 
 USER $USER_NAME
