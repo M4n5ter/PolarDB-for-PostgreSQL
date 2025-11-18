@@ -2,7 +2,7 @@
 
 FROM mst1208/polardb-binary:ubuntu-24.04
 
-SHELL ["/bin/bash", "-lc"]
+SHELL ["/bin/bash", "-c"]
 
 RUN install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql
 

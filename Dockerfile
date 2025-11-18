@@ -9,7 +9,7 @@ COPY . ./polardb_pg
 
 USER root
 
-SHELL ["/bin/bash", "-lc"]
+SHELL ["/bin/bash", "-c"]
 
 # rustup
 RUN rustup self update && rustup update

@@ -7,7 +7,7 @@ LABEL maintainer="m4n5terrr@gmail.com"
 
 COPY misc/pg_bsd_indent_$TARGETARCH /usr/bin/pg_bsd_indent
 
-SHELL ["/bin/bash", "-lc"]
+SHELL ["/bin/bash", "-c"]
 
 CMD bash
 
