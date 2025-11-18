@@ -118,7 +118,7 @@ RUN perl -MCPAN -e "CPAN::Shell->notest('install', 'SHANCOCK/Perl-Tidy-20230309.
 
 # set to empty if GitHub is not barriered
 # ENV GITHUB_PROXY=https://ghproxy.com/
-ENV GITHUB_PROXY=
+ENV GITHUB_PROXY=https://ghproxy.com/
 
 ENV ZLOG_VERSION=1.2.14
 ENV PFSD_VERSION=pfsd4pg-release-1.2.42-20220419
