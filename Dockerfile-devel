@@ -7,6 +7,8 @@ LABEL maintainer="m4n5terrr@gmail.com"
 
 COPY misc/pg_bsd_indent_$TARGETARCH /usr/bin/pg_bsd_indent
 
+SHELL ["/bin/bash", "-lc"]
+
 CMD bash
 
 ENV PATH="/home/postgres/tmp_polardb_pg_17_base/bin:/home/postgres/tmp_polardb_pg_16_base/bin:/home/postgres/tmp_polardb_pg_15_base/bin:/home/postgres/tmp_basedir_polardb_pg_1100_bld/bin:$PATH"
@@ -195,6 +197,6 @@ git-fetch-with-cli = true
 EOF
 
 # pgrx
-RUN bash -lc "cargo install --locked cargo-pgrx"
+RUN cargo install --locked cargo-pgrx
 
 USER $USER_NAME
