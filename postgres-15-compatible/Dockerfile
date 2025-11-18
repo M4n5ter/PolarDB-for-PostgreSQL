@@ -43,14 +43,15 @@ RUN chown -R postgres:postgres /u01/polardb_pg
 # make the sample config easier to munge (and "correct by default")
 RUN set -eux; \
 	POLARDB_SHARE=/u01/polardb_pg/share/postgresql; \
-	install -d /usr/share/postgresql/$PG_MAJOR; \
-	cp -fv "$POLARDB_SHARE/postgresql.conf.sample" /usr/share/postgresql/postgresql.conf.sample; \
-	ln -sf ../postgresql.conf.sample "/usr/share/postgresql/$PG_MAJOR/postgresql.conf.sample"; \
-	cat "$POLARDB_SHARE/polardb.conf.sample" >> /usr/share/postgresql/postgresql.conf.sample; \
-	sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/share/postgresql/postgresql.conf.sample; \
-	sed -ri "s!^shared_preload_libraries\s*=.*!shared_preload_libraries = 'age,pg_duckdb,vchord,pg_tokenizer,vchord_bm25,pg_net,pg_cron,pgaudit,safeupdate,\$libdir/polar_vfs,\$libdir/polar_io_stat,\$libdir/polar_monitor_preload,\$libdir/polar_worker'!" /usr/share/postgresql/postgresql.conf.sample; \
-	echo "search_path = '\"\$user\", public, ag_catalog, tokenizer_catalog, bm25_catalog'" >> /usr/share/postgresql/postgresql.conf.sample; \
-	grep -F "listen_addresses = '*'" /usr/share/postgresql/postgresql.conf.sample
+	POSTGRES_SHARE=/usr/share/postgresql; \
+	sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" "$POLARDB_SHARE/postgresql.conf.sample"; \
+	sed -ri "s!^shared_preload_libraries\s*=.*!shared_preload_libraries = 'age,pg_duckdb,vchord,pg_tokenizer,vchord_bm25,pg_net,pg_cron,pgaudit,safeupdate,\$libdir/polar_vfs,\$libdir/polar_io_stat,\$libdir/polar_monitor_preload,\$libdir/polar_worker'!" "$POLARDB_SHARE/postgresql.conf.sample"; \
+	echo "search_path = '\"\$user\", public, ag_catalog, tokenizer_catalog, bm25_catalog'" >> "$POLARDB_SHARE/postgresql.conf.sample"; \
+	cat "$POLARDB_SHARE/polardb.conf.sample" >> "$POLARDB_SHARE/postgresql.conf.sample"; \
+	install -d $POSTGRES_SHARE/$PG_MAJOR; \
+	cp -fv "$POLARDB_SHARE/postgresql.conf.sample" $POSTGRES_SHARE/postgresql.conf.sample; \
+	ln -sf ../postgresql.conf.sample "$POSTGRES_SHARE/$PG_MAJOR/postgresql.conf.sample"; \
+	grep -F "listen_addresses = '*'" "$POLARDB_SHARE/postgresql.conf.sample"
 
 RUN install --verbose --directory --owner postgres --group postgres --mode 3777 /var/run/postgresql
 
