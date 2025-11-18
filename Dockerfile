@@ -62,6 +62,3 @@ COPY --from=building /u01/polardb_pg/ /u01/polardb_pg/
 
 RUN sudo chown -R postgres:postgres /u01/polardb_pg/
 RUN sudo chmod -R 700 /u01/polardb_pg/
-
-# merge
-# RUN cp -a /u01/polardb_pg/* /usr/local/ && rm -rf /u01/polardb_pg
