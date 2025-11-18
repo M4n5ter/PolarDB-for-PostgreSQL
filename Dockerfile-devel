@@ -200,6 +200,6 @@ git-fetch-with-cli = true
 EOF
 
 # 安装 cargo-pgrx
-RUN cargo install --locked cargo-pgrx
+RUN cargo install --locked cargo-pgrx || (cargo install cargo-binstall && cargo binstall cargo-pgrx)
 
 USER $USER_NAME
