@@ -84,10 +84,10 @@ RUN set -ex; \
 	gpgconf --kill all; \
 	rm -rf "$GNUPGHOME"
 
-ENV PG_MAJOR 15
-ENV PATH $PATH:/usr/lib/postgresql/$PG_MAJOR/bin
+ENV PG_MAJOR=15
+ENV PATH=/usr/lib/postgresql/${PG_MAJOR}/bin:/u01/polardb_pg/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-ENV PG_VERSION 15.15-1.pgdg13+1
+ENV PG_VERSION=15.15-1.pgdg13+1
 
 RUN set -ex; \
 	\
