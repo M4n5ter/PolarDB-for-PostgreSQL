@@ -1,6 +1,4 @@
 # Keep the Docker build context lean so COPY layers stay cached.
-.git
-.gitmodules
 .gitignore
 .gitattributes
 .github/
