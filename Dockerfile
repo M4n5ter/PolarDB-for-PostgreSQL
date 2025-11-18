@@ -12,7 +12,7 @@ USER root
 SHELL ["/bin/bash", "-c"]
 
 # rustup
-RUN (rustup self update || CARGO_HOME=/tmp/cargo-official rustup self update) && (rustup update || CARGO_HOME=/tmp/cargo-official rustup update)
+RUN (rustup self update || RUSTUP_DIST_SERVER= RUSTUP_UPDATE_ROOT= rustup self update) && (rustup update || RUSTUP_DIST_SERVER= RUSTUP_UPDATE_ROOT= rustup update)
 
 # Compile and install PolarDB-PG
 WORKDIR /home/postgres/polardb_pg
