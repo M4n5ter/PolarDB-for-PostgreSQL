@@ -42,7 +42,6 @@ SUBDIRS += pg-safeupdate
 SUBDIRS += index_advisor
 SUBDIRS += pgaudit
 SUBDIRS += pg_cron
-SUBDIRS += pg_net
 SUBDIRS += pg_duckdb
 endif # enable_minimal
 

@@ -64,3 +64,7 @@ RUN wget --no-verbose https://download.osgeo.org/postgis/source/postgis-3.5.2.ta
     ./configure -q && \
     make -s -j$(nproc) && \
     make -s install
+
+# Build and install pg_net extension separately (removed from external SUBDIRS)
+WORKDIR /home/postgres/polardb_pg/external/pg_net
+RUN make clean && make && make install
