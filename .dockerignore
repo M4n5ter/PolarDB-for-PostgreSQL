@@ -38,3 +38,6 @@ build.log
 
 # macOS metadata
 .DS_Store
+
+# other
+postgres-15-compatible/
