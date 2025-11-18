@@ -33,6 +33,13 @@ RUN sed -i '/struct BackgroundWorkerHandle/,/};/d' external/pg_cron/include/task
 
 RUN ./build.sh --ec="--prefix=/u01/polardb_pg/" --debug=off --quiet=off --ni --port=5432
 
+RUN set -euo pipefail && \
+    install_default() { cargo install --locked cargo-pgrx; } && \
+    install_alt_home() { CARGO_HOME=/tmp/cargo-official cargo install cargo-pgrx; } && \
+    install_binstall() { cargo install cargo-binstall && cargo binstall cargo-pgrx --no-confirm; } && \
+    (install_default || install_alt_home || install_binstall) && \
+    command -v cargo-pgrx >/dev/null && cargo pgrx --version
+
 # Initialize cargo-pgrx config so later installs can find pg_config
 RUN cargo pgrx init --pg15=/u01/polardb_pg/bin/pg_config
 

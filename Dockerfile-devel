@@ -199,7 +199,12 @@ index = "https://rsproxy.cn/crates.io-index"
 git-fetch-with-cli = true
 EOF
 
-# 安装 cargo-pgrx
-RUN cargo install --locked cargo-pgrx || CARGO_HOME=/tmp/cargo-official cargo install cargo-pgrx || (cargo install cargo-binstall && cargo binstall cargo-pgrx)
+# 安装 cargo-pgrx（失败即退出，以免误以为已安装成功）
+RUN set -euo pipefail && \
+    install_default() { cargo install --locked cargo-pgrx; } && \
+    install_alt_home() { CARGO_HOME=/tmp/cargo-official cargo install cargo-pgrx; } && \
+    install_binstall() { cargo install cargo-binstall && cargo binstall cargo-pgrx --no-confirm; } && \
+    (install_default || install_alt_home || install_binstall) && \
+    command -v cargo-pgrx >/dev/null && cargo pgrx --version
 
 USER $USER_NAME
