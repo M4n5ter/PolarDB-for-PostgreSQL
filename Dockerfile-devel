@@ -181,7 +181,7 @@ USER root
 ENV RUSTUP_DIST_SERVER="https://rsproxy.cn"
 ENV RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
 RUN curl --proto '=https' --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh \
-    | bash -s -- -y --default-toolchain stable
+    | bash -s -- -y --default-toolchain stable || RUSTUP_DIST_SERVER=https://static.rust-lang.org RUSTUP_UPDATE_ROOT=https://static.rust-lang.org/rustup  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y --default-toolchain stable
 
 ENV PATH="${PATH}:/root/.cargo/bin"
 
