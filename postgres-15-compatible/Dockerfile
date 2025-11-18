@@ -1,8 +1,4 @@
-#
-# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
-#
-# PLEASE DO NOT EDIT IT DIRECTLY.
-#
+# mst1208/postgres:15-polardb
 
 FROM mst1208/polardb-binary:ubuntu-24.04 AS polardb
 
@@ -176,6 +172,7 @@ RUN set -ex; \
 # Bring in PolarDB binaries (built via root Dockerfile) and mirror them into the standard directory layout
 RUN mkdir -p /u01/polardb_pg
 COPY --from=polardb /u01/polardb_pg/ /u01/polardb_pg/
+COPY polardb.conf.sample /tmp/polardb.conf.sample
 RUN set -eux; \
 	rm -rf /usr/lib/postgresql/$PG_MAJOR; \
 	mkdir -p /usr/lib/postgresql/$PG_MAJOR; \
@@ -189,7 +186,7 @@ RUN set -eux; \
 	dpkg-divert --add --rename --divert "/usr/share/postgresql/postgresql.conf.sample.dpkg" "/usr/share/postgresql/$PG_MAJOR/postgresql.conf.sample"; \
 	cp -v /usr/share/postgresql/postgresql.conf.sample.dpkg /usr/share/postgresql/postgresql.conf.sample; \
 	ln -sv ../postgresql.conf.sample "/usr/share/postgresql/$PG_MAJOR/"; \
-	cat /usr/lib/postgresql/$PG_MAJOR/share/polardb.conf.sample >> /usr/share/postgresql/postgresql.conf.sample; \
+	cat /tmp/polardb.conf.sample >> /usr/share/postgresql/postgresql.conf.sample; \
 	sed -ri "s!^#?(listen_addresses)\s*=\s*\S+.*!\1 = '*'!" /usr/share/postgresql/postgresql.conf.sample; \
 	sed -ri "s!^shared_preload_libraries\s*=.*!shared_preload_libraries = 'age,pg_duckdb,vchord,pg_tokenizer,vchord_bm25,pg_net,pg_cron,pgaudit,safeupdate,\$libdir/polar_vfs,\$libdir/polar_io_stat,\$libdir/polar_monitor_preload,\$libdir/polar_worker'!" /usr/share/postgresql/postgresql.conf.sample; \
 	echo "search_path = '\"\$user\", public, ag_catalog, tokenizer_catalog, bm25_catalog'" >> /usr/share/postgresql/postgresql.conf.sample; \

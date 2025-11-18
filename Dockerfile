@@ -1,3 +1,5 @@
+# mst1208/polardb-binary:ubuntu-24.04
+
 FROM mst1208/polardb-pg-devel:ubuntu-24.04 AS building
 LABEL maintainer="m4n5terrr@gmail.com"
 
