@@ -71,3 +71,12 @@ WORKDIR /home/postgres/polardb_pg/external/pg_net
 RUN PG_CONFIG=$PG_CONFIG make clean && \
     PG_CONFIG=$PG_CONFIG make -j$(nproc) && \
     PG_CONFIG=$PG_CONFIG make install
+
+# Cleanup build caches/artifacts to reduce final image size
+WORKDIR /home/postgres/polardb_pg
+RUN cargo install cargo-clean-all && \
+    cargo clean-all --yes && \
+    rm -rf /tmp/cargo-official /root/.cache /home/postgres/.cache && \
+    find /home/postgres/polardb_pg -name '*.o' -o -name '*.bc' -o -name '*.a' -delete && \
+    rm -rf /home/postgres/postgis-3.5.2 /home/postgres/postgis-3.5.2.tar.gz && \
+    rm -rf /var/lib/apt/lists/* /tmp/*
