@@ -41,18 +41,19 @@ RUN set -euo pipefail && \
     command -v cargo-pgrx >/dev/null && cargo pgrx --version
 
 # Initialize cargo-pgrx config so later installs can find pg_config
-RUN cargo pgrx init --pg15=/u01/polardb_pg/bin/pg_config
+RUN cargo pgrx init --pg15=$PG_CONFIG
 
 # Build cargo-based extensions that require cargo/pgrx manually
 WORKDIR /home/postgres/polardb_pg
-RUN (make -C external/VectorChord build || CARGO_HOME=/tmp/cargo-official make -C external/VectorChord build) && \
-    make -C external/VectorChord install
+RUN (PG_CONFIG=$PG_CONFIG make -C external/VectorChord build || \
+    CARGO_HOME=/tmp/cargo-official PG_CONFIG=$PG_CONFIG make -C external/VectorChord build) && \
+    PG_CONFIG=$PG_CONFIG make -C external/VectorChord install
 
 WORKDIR /home/postgres/polardb_pg/external/VectorChord-bm25
-RUN cargo pgrx install --sudo --release --features "pg15" --pg-config /u01/polardb_pg/bin/pg_config || CARGO_HOME=/tmp/cargo-official cargo pgrx install --sudo --release --features "pg15" --pg-config /u01/polardb_pg/bin/pg_config
+RUN cargo pgrx install --sudo --release --features "pg15" --pg-config $PG_CONFIG || CARGO_HOME=/tmp/cargo-official cargo pgrx install --sudo --release --features "pg15" --pg-config $PG_CONFIG
 
 WORKDIR /home/postgres/polardb_pg/external/pg_tokenizer.rs
-RUN cargo pgrx install --sudo --release --features "pg15 lindera-ipadic" --pg-config /u01/polardb_pg/bin/pg_config || CARGO_HOME=/tmp/cargo-official cargo pgrx install --sudo --release --features "pg15 lindera-ipadic" --pg-config /u01/polardb_pg/bin/pg_config
+RUN cargo pgrx install --sudo --release --features "pg15 lindera-ipadic" --pg-config $PG_CONFIG || CARGO_HOME=/tmp/cargo-official cargo pgrx install --sudo --release --features "pg15 lindera-ipadic" --pg-config /u01/polardb_pg/bin/pg_config
 
 WORKDIR /home/postgres/polardb_pg
 
@@ -65,6 +66,8 @@ RUN wget --no-verbose https://download.osgeo.org/postgis/source/postgis-3.5.2.ta
     make -s -j$(nproc) && \
     make -s install
 
-# Build and install pg_net extension separately (removed from external SUBDIRS)
+# Build and install pg_net extension separately
 WORKDIR /home/postgres/polardb_pg/external/pg_net
-RUN make clean && make && make install
+RUN PG_CONFIG=$PG_CONFIG make clean && \
+    PG_CONFIG=$PG_CONFIG make && \
+    PG_CONFIG=$PG_CONFIG make install
