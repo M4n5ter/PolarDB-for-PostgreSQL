@@ -69,5 +69,5 @@ RUN wget --no-verbose https://download.osgeo.org/postgis/source/postgis-3.5.2.ta
 # Build and install pg_net extension separately
 WORKDIR /home/postgres/polardb_pg/external/pg_net
 RUN PG_CONFIG=$PG_CONFIG make clean && \
-    PG_CONFIG=$PG_CONFIG make && \
+    PG_CONFIG=$PG_CONFIG make -j$(nproc) && \
     PG_CONFIG=$PG_CONFIG make install
