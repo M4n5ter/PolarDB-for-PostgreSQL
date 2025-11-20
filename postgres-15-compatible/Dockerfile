@@ -43,6 +43,9 @@ RUN set -eux; \
 
 RUN chown -R postgres:postgres /u01/polardb_pg
 
+# Drop leftover source tree from base image to keep runtime lean
+RUN rm -rf /home/postgres/polardb_pg
+
 # make the sample config easier to munge (and "correct by default")
 RUN set -eux; \
 	POLARDB_SHARE=/u01/polardb_pg/share/postgresql; \
