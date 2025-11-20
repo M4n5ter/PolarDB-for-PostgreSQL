@@ -4,6 +4,9 @@ FROM mst1208/polardb-binary:ubuntu-24.04
 
 SHELL ["/bin/bash", "-c"]
 
+# ensure clean cargo build cache
+RUN cargo clean-all --yes
+
 RUN install --verbose --directory --owner postgres --group postgres --mode 1777 /var/lib/postgresql
 
 # grab gosu for easy step-down from root
